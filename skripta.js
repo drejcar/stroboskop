@@ -23,9 +23,17 @@ window.addEventListener('load', function() {
 	
 	//Stroboskop
 	var vrednosti = [];
-	var minCas = 0;
-	var maxCas = 0;
+	var minCas = 0;//document.getElementById("min").value;
+	var maxCas = 0;//document.getElementById("max").value;
+	/*document.getElementById("min").value.onchange = function(){
+		minCas=document.getElementById("min").value;
+	};
+	document.getElementById("max").value.onchange = function(){
+		maxCas=document.getElementById("max").value;
+	};*/
 	var ustavi = false;
+	
+	console.log("minCas: "+minCas);
 	
 	var spremeniBarvo = function(id) {
 		document.getElementById("stroboskop").style.backgroundColor = "#"+vrednosti[id];
@@ -33,9 +41,14 @@ window.addEventListener('load', function() {
 		if (ustavi) {
 			ustavi = false;
 		} else {
-			novId = (id+1) % vrednosti.length;
-			timeout = Math.floor((Math.random() * (maxCas-minCas)) + minCas);
-			setTimeout(function() {spremeniBarvo(novId)} , timeout);
+			novId = (id+1) % vrednosti.length; //premik po barvah
+			minCas = document.getElementById("min").value;
+			maxCas = document.getElementById("max").value;
+			timeout = Math.floor((Math.random() * (maxCas-minCas)) + minCas); //nastavi cas med premikom
+			//console.log("minCas: "+minCas);
+			//console.log("maxCas: "+maxCas);
+			//console.log("timeout: "+timeout);
+			setTimeout(function() {spremeniBarvo(novId)} , timeout); //izvede premik cez "timeout" ms
 		}		
 	}
 	
@@ -55,8 +68,11 @@ window.addEventListener('load', function() {
 			vrednosti.push(barva.innerHTML);
 		}
 		
+		
 		minCas = 1000;
 		maxCas = 1000;
+		//minCas = document.getElementById("min").value;
+		//maxCas = document.getElementById("max").value;
 		spremeniBarvo(0);
 		
 		var start = document.querySelector("#start");
